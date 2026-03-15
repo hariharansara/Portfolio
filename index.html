@@ -1,0 +1,2583 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hariharan S — AI &amp; Data Science Portfolio</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Raleway:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #020a04;
+        --bg2: #050f06;
+        --bg3: #071209;
+        --gold: #c9a84c;
+        --gold2: #f0c040;
+        --green: #1aff7a;
+        --dkgreen: #0d3318;
+        --forest: #0a4d1a;
+        --emerald: #2ecc71;
+        --lime: #7fff00;
+        --jade: #00a86b;
+        --text: #e8f5e9;
+        --muted: #6b8f71;
+        --border: rgba(201, 168, 76, 0.2);
+        --card: rgba(5, 15, 6, 0.88);
+        --glow-g: rgba(26, 255, 122, 0.25);
+        --glow-gold: rgba(201, 168, 76, 0.3);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Raleway", sans-serif;
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      /* CURSOR - Loki scepter */
+      #cur {
+        width: 12px;
+        height: 12px;
+        background: var(--gold2);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        box-shadow:
+          0 0 16px var(--gold2),
+          0 0 40px rgba(240, 192, 64, 0.4);
+        transition:
+          width 0.2s,
+          height 0.2s;
+      }
+      #cur2 {
+        width: 34px;
+        height: 34px;
+        border: 1px solid rgba(201, 168, 76, 0.55);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: transform 0.16s ease;
+      }
+
+      /* BG CANVAS */
+      #bgc {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+      }
+
+      /* AURORA */
+      .aurora {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .ab {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(100px);
+        animation: drift 22s ease-in-out infinite alternate;
+      }
+      .ab1 {
+        width: 800px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(26, 255, 122, 0.1),
+          transparent 70%
+        );
+        top: -20%;
+        left: -10%;
+        animation-duration: 24s;
+      }
+      .ab2 {
+        width: 600px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 168, 107, 0.12),
+          transparent 70%
+        );
+        bottom: -15%;
+        right: -5%;
+        animation-duration: 18s;
+        animation-delay: -9s;
+      }
+      .ab3 {
+        width: 500px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(201, 168, 76, 0.08),
+          transparent 70%
+        );
+        top: 35%;
+        left: 35%;
+        animation-duration: 30s;
+        animation-delay: -5s;
+      }
+      .ab4 {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(
+          circle,
+          rgba(46, 204, 113, 0.07),
+          transparent 70%
+        );
+        bottom: 20%;
+        right: 25%;
+        animation-duration: 20s;
+        animation-delay: -14s;
+      }
+      @keyframes drift {
+        from {
+          transform: translate(0, 0) scale(1);
+        }
+        to {
+          transform: translate(50px, 35px) scale(1.12);
+        }
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 6vw;
+        backdrop-filter: blur(22px);
+        background: rgba(2, 10, 4, 0.75);
+        border-bottom: 1px solid var(--border);
+      }
+      .logo {
+        font-family: "Cinzel", serif;
+        font-size: 1.4rem;
+        font-weight: 900;
+        letter-spacing: 0.2em;
+        background: linear-gradient(
+          90deg,
+          var(--gold),
+          var(--gold2),
+          var(--gold)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-decoration: none;
+      }
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+      .nav-links a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        transition: color 0.3s;
+        font-family: "Cinzel", serif;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: linear-gradient(90deg, var(--gold), var(--green));
+        transition: width 0.3s;
+      }
+      .nav-links a:hover {
+        color: var(--gold);
+      }
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* SECTIONS */
+      section {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ═══ HERO ═══ */
+      #hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 8vw;
+        padding-top: 100px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Vine border decorations */
+      .vine-left {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 80px;
+        pointer-events: none;
+        z-index: 2;
+        opacity: 0.5;
+      }
+      .vine-right {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 80px;
+        pointer-events: none;
+        z-index: 2;
+        opacity: 0.5;
+      }
+
+      .hero-eyebrow {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.5em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.6s 0.2s forwards;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      .hero-eyebrow::before,
+      .hero-eyebrow::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        max-width: 60px;
+      }
+      .hero-h1 {
+        font-family: "Cinzel", serif;
+        font-weight: 900;
+        font-size: clamp(3rem, 10vw, 8.5rem);
+        line-height: 0.9;
+        letter-spacing: 0.05em;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.35s forwards;
+      }
+      .hero-h1 .l1 {
+        display: block;
+        color: rgba(232, 245, 233, 0.12);
+        font-size: clamp(1.5rem, 3.5vw, 3rem);
+        letter-spacing: 0.6em;
+        font-weight: 400;
+      }
+      .hero-h1 .l2 {
+        display: block;
+        background: linear-gradient(
+          110deg,
+          var(--green) 0%,
+          var(--gold) 45%,
+          var(--emerald) 80%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200%;
+        animation: shimmer 6s linear infinite;
+        text-shadow: none;
+      }
+      .hero-h1 .l3 {
+        display: block;
+        color: var(--text);
+        font-size: clamp(1.8rem, 4vw, 3.5rem);
+        letter-spacing: 0.15em;
+        font-weight: 600;
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 0%;
+        }
+        100% {
+          background-position: 200%;
+        }
+      }
+      .hero-sub {
+        max-width: 500px;
+        font-size: 0.95rem;
+        color: var(--muted);
+        line-height: 1.9;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.5s forwards;
+        margin-bottom: 2.5rem;
+        font-weight: 400;
+      }
+      .hero-sub strong {
+        color: var(--gold);
+        font-weight: 600;
+      }
+      .hero-btns {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.65s forwards;
+      }
+      .btn-loki {
+        padding: 0.85rem 2.2rem;
+        background: linear-gradient(135deg, var(--forest), var(--dkgreen));
+        color: var(--gold);
+        border: 1px solid rgba(201, 168, 76, 0.5);
+        border-radius: 4px;
+        font-family: "Cinzel", serif;
+        font-weight: 700;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        cursor: none;
+        text-decoration: none;
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s,
+          background 0.3s;
+        box-shadow:
+          0 0 24px rgba(201, 168, 76, 0.2),
+          inset 0 0 20px rgba(26, 255, 122, 0.05);
+      }
+      .btn-loki:hover {
+        transform: translateY(-3px);
+        box-shadow:
+          0 0 40px rgba(201, 168, 76, 0.4),
+          0 0 80px rgba(26, 255, 122, 0.15),
+          inset 0 0 30px rgba(26, 255, 122, 0.1);
+        background: linear-gradient(135deg, #0a4d1a, #0d3318);
+      }
+      .btn-ghost {
+        padding: 0.85rem 2.2rem;
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid rgba(107, 143, 113, 0.35);
+        border-radius: 4px;
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        cursor: none;
+        text-decoration: none;
+        transition:
+          border-color 0.3s,
+          color 0.3s,
+          transform 0.3s;
+      }
+      .btn-ghost:hover {
+        border-color: var(--green);
+        color: var(--green);
+        transform: translateY(-3px);
+      }
+
+      .hero-gfx {
+        position: absolute;
+        right: 4vw;
+        top: 50%;
+        transform: translateY(-50%);
+        width: min(480px, 42vw);
+        opacity: 0;
+        animation: fadeIn 0.9s 0.8s forwards;
+        pointer-events: none;
+      }
+
+      /* ═══ DIVIDER ═══ */
+      .rune-divider {
+        width: 100%;
+        padding: 1.5rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        position: relative;
+        z-index: 1;
+      }
+      .rune-divider::before,
+      .rune-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(201, 168, 76, 0.25),
+          transparent
+        );
+      }
+      .rune-sym {
+        font-family: "Cinzel", serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.3em;
+        color: rgba(201, 168, 76, 0.4);
+        text-transform: uppercase;
+      }
+
+      /* ═══ SECTION COMMON ═══ */
+      .sw {
+        padding: 100px 8vw;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+      .sec-tag {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        font-weight: 600;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+      }
+      .sec-tag::before {
+        content: "⟡";
+        font-size: 0.9rem;
+        color: var(--gold);
+        opacity: 0.7;
+      }
+      .sec-title {
+        font-family: "Cinzel", serif;
+        font-weight: 900;
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        letter-spacing: 0.06em;
+        line-height: 0.95;
+        margin-bottom: 3rem;
+      }
+      .sec-title span {
+        background: linear-gradient(90deg, var(--green), var(--gold));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* ═══ ABOUT ═══ */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.35fr;
+        gap: 6rem;
+        align-items: center;
+      }
+
+      /* Loki medallion */
+      .medallion-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+      .medallion {
+        position: relative;
+        width: 300px;
+        height: 300px;
+      }
+      .med-outer {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 1px solid rgba(201, 168, 76, 0.3);
+        animation: spin 35s linear infinite;
+      }
+      .med-mid {
+        position: absolute;
+        inset: 16px;
+        border-radius: 50%;
+        border: 1px solid rgba(26, 255, 122, 0.2);
+        animation: spinR 22s linear infinite;
+      }
+      .med-core {
+        position: absolute;
+        inset: 36px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #071209, #020a04);
+        border: 2px solid rgba(201, 168, 76, 0.45);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        box-shadow:
+          0 0 50px rgba(201, 168, 76, 0.1),
+          inset 0 0 40px rgba(26, 255, 122, 0.06);
+      }
+      .med-letters {
+        font-family: "Cinzel", serif;
+        font-weight: 900;
+        font-size: 3.8rem;
+        background: linear-gradient(
+          135deg,
+          var(--gold),
+          var(--gold2),
+          var(--green)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1;
+      }
+      .med-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.5rem;
+        letter-spacing: 0.35em;
+        color: rgba(201, 168, 76, 0.5);
+        text-transform: uppercase;
+      }
+
+      /* Rune marks on ring */
+      .rune-mark {
+        position: absolute;
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        color: rgba(201, 168, 76, 0.6);
+        animation: spin 35s linear infinite;
+      }
+      .rm1 {
+        top: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .rm2 {
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .rm3 {
+        left: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .rm4 {
+        right: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes spinR {
+        to {
+          transform: rotate(-360deg);
+        }
+      }
+
+      .about-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        width: 100%;
+        max-width: 300px;
+      }
+      .astat {
+        padding: 1rem 1.2rem;
+        border-radius: 6px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+        transition:
+          transform 0.3s,
+          border-color 0.3s,
+          box-shadow 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+      .astat::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(201, 168, 76, 0.4),
+          transparent
+        );
+      }
+      .astat:hover {
+        transform: translateY(-3px);
+        border-color: rgba(201, 168, 76, 0.45);
+        box-shadow: 0 8px 30px rgba(201, 168, 76, 0.12);
+      }
+      .astat-n {
+        font-family: "Cinzel", serif;
+        font-size: 2rem;
+        font-weight: 900;
+        background: linear-gradient(90deg, var(--gold), var(--green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .astat-l {
+        font-size: 0.62rem;
+        font-weight: 600;
+        color: var(--muted);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-top: 2px;
+      }
+      .about-text p {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.95;
+        margin-bottom: 1rem;
+      }
+      .pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1.5rem;
+      }
+      .pill {
+        padding: 0.38rem 1rem;
+        border-radius: 3px;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        cursor: default;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        font-family: "Cinzel", serif;
+      }
+      .pill:hover {
+        transform: scale(1.06);
+      }
+      .pg {
+        background: rgba(26, 255, 122, 0.07);
+        border: 1px solid rgba(26, 255, 122, 0.25);
+        color: var(--green);
+      }
+      .pg:hover {
+        box-shadow: 0 0 14px rgba(26, 255, 122, 0.2);
+      }
+      .po {
+        background: rgba(201, 168, 76, 0.07);
+        border: 1px solid rgba(201, 168, 76, 0.25);
+        color: var(--gold);
+      }
+      .po:hover {
+        box-shadow: 0 0 14px rgba(201, 168, 76, 0.2);
+      }
+
+      /* ═══ PROJECTS ═══ */
+      .proj-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        gap: 1.5rem;
+      }
+      .pc {
+        border-radius: 8px;
+        padding: 2.2rem;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.35s,
+          box-shadow 0.35s;
+        cursor: none;
+        transform-style: preserve-3d;
+        background: var(--card);
+        backdrop-filter: blur(12px);
+      }
+      .pc::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 0.4s;
+        background: radial-gradient(
+          circle at var(--mx, 50%) var(--my, 50%),
+          rgba(201, 168, 76, 0.07),
+          transparent 65%
+        );
+      }
+      .pc:hover::before {
+        opacity: 1;
+      }
+      .pc::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--pc-col),
+          transparent
+        );
+        opacity: 0.5;
+      }
+      .pc1 {
+        border: 1px solid rgba(26, 255, 122, 0.2);
+        --pc-col: rgba(26, 255, 122, 0.5);
+      }
+      .pc1:hover {
+        box-shadow:
+          0 20px 60px rgba(26, 255, 122, 0.12),
+          0 0 0 1px rgba(26, 255, 122, 0.3);
+        transform: translateY(-7px);
+      }
+      .pc2 {
+        border: 1px solid rgba(201, 168, 76, 0.2);
+        --pc-col: rgba(201, 168, 76, 0.5);
+      }
+      .pc2:hover {
+        box-shadow:
+          0 20px 60px rgba(201, 168, 76, 0.12),
+          0 0 0 1px rgba(201, 168, 76, 0.3);
+        transform: translateY(-7px);
+      }
+      .pc3 {
+        border: 1px solid rgba(46, 204, 113, 0.2);
+        --pc-col: rgba(46, 204, 113, 0.5);
+      }
+      .pc3:hover {
+        box-shadow:
+          0 20px 60px rgba(46, 204, 113, 0.12),
+          0 0 0 1px rgba(46, 204, 113, 0.3);
+        transform: translateY(-7px);
+      }
+      .pc4 {
+        border: 1px solid rgba(0, 168, 107, 0.2);
+        --pc-col: rgba(0, 168, 107, 0.5);
+      }
+      .pc4:hover {
+        box-shadow:
+          0 20px 60px rgba(0, 168, 107, 0.1),
+          0 0 0 1px rgba(0, 168, 107, 0.3);
+        transform: translateY(-7px);
+      }
+      .pc5 {
+        border: 1px solid rgba(127, 255, 0, 0.18);
+        --pc-col: rgba(127, 255, 0, 0.4);
+      }
+      .pc5:hover {
+        box-shadow:
+          0 20px 60px rgba(127, 255, 0, 0.1),
+          0 0 0 1px rgba(127, 255, 0, 0.3);
+        transform: translateY(-7px);
+      }
+      .pc-num {
+        font-family: "Cinzel", serif;
+        font-size: 3.5rem;
+        font-weight: 900;
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        opacity: 0.1;
+        user-select: none;
+      }
+      .pc1 .pc-num {
+        color: var(--green);
+      }
+      .pc2 .pc-num {
+        color: var(--gold);
+      }
+      .pc3 .pc-num {
+        color: var(--emerald);
+      }
+      .pc4 .pc-num {
+        color: var(--jade);
+      }
+      .pc5 .pc-num {
+        color: var(--lime);
+      }
+      .pc-tag {
+        display: inline-block;
+        padding: 0.28rem 0.8rem;
+        border-radius: 2px;
+        font-family: "Cinzel", serif;
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .pc1 .pc-tag {
+        background: rgba(26, 255, 122, 0.1);
+        color: var(--green);
+        border: 1px solid rgba(26, 255, 122, 0.25);
+      }
+      .pc2 .pc-tag {
+        background: rgba(201, 168, 76, 0.1);
+        color: var(--gold);
+        border: 1px solid rgba(201, 168, 76, 0.25);
+      }
+      .pc3 .pc-tag {
+        background: rgba(46, 204, 113, 0.1);
+        color: var(--emerald);
+        border: 1px solid rgba(46, 204, 113, 0.25);
+      }
+      .pc4 .pc-tag {
+        background: rgba(0, 168, 107, 0.1);
+        color: var(--jade);
+        border: 1px solid rgba(0, 168, 107, 0.25);
+      }
+      .pc5 .pc-tag {
+        background: rgba(127, 255, 0, 0.08);
+        color: var(--lime);
+        border: 1px solid rgba(127, 255, 0, 0.2);
+      }
+      .pc-icon {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 42px;
+        height: 42px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        border: 1px solid var(--border);
+      }
+      .pc-title {
+        font-family: "Cinzel", serif;
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 0.7rem;
+        line-height: 1.35;
+      }
+      .pc-desc {
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.75;
+      }
+      .pc-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 1.2rem;
+      }
+      .pc-tech span {
+        font-size: 0.6rem;
+        font-weight: 600;
+        padding: 0.22rem 0.6rem;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--muted);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.05em;
+      }
+
+      /* ═══ EXP ═══ */
+      .exp-grid {
+        display: grid;
+        gap: 1.2rem;
+        max-width: 860px;
+      }
+      .exp-card {
+        padding: 2.2rem 2.5rem;
+        border-radius: 8px;
+        background: var(--card);
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s;
+      }
+      .exp-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--ec-col, 0.5),
+          transparent
+        );
+      }
+      .exp-card:hover {
+        transform: translateX(8px);
+      }
+      .ec1 {
+        border: 1px solid rgba(26, 255, 122, 0.18);
+        border-left: 3px solid var(--green);
+        --ec-col: rgba(26, 255, 122, 0.6);
+      }
+      .ec2 {
+        border: 1px solid rgba(201, 168, 76, 0.18);
+        border-left: 3px solid var(--gold);
+        --ec-col: rgba(201, 168, 76, 0.6);
+      }
+      .exp-period {
+        font-family: "Cinzel", serif;
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
+      }
+      .ec1 .exp-period {
+        color: var(--green);
+      }
+      .ec2 .exp-period {
+        color: var(--gold);
+      }
+      .exp-role {
+        font-family: "Cinzel", serif;
+        font-weight: 700;
+        font-size: 1.15rem;
+        margin-bottom: 0.25rem;
+        letter-spacing: 0.05em;
+      }
+      .exp-co {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-bottom: 0.9rem;
+        font-style: italic;
+      }
+      .exp-desc {
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.85;
+      }
+      .exp-badge {
+        position: absolute;
+        top: 1.8rem;
+        right: 2rem;
+        padding: 0.3rem 0.85rem;
+        border-radius: 2px;
+        font-family: "Cinzel", serif;
+        font-size: 0.58rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .ec1 .exp-badge {
+        background: rgba(26, 255, 122, 0.08);
+        color: var(--green);
+        border: 1px solid rgba(26, 255, 122, 0.2);
+      }
+      .ec2 .exp-badge {
+        background: rgba(201, 168, 76, 0.08);
+        color: var(--gold);
+        border: 1px solid rgba(201, 168, 76, 0.2);
+      }
+
+      /* ═══ EDU ═══ */
+      .edu-grid {
+        display: grid;
+        gap: 1rem;
+      }
+      .edu-card {
+        padding: 1.6rem 2rem;
+        border-radius: 8px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        transition:
+          transform 0.3s,
+          border-color 0.3s,
+          box-shadow 0.3s;
+        backdrop-filter: blur(10px);
+      }
+      .edu-card:hover {
+        transform: translateX(6px);
+        border-color: rgba(201, 168, 76, 0.4);
+        box-shadow: 0 8px 30px rgba(201, 168, 76, 0.08);
+      }
+      .edu-yr {
+        font-family: "Cinzel", serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--gold);
+        white-space: nowrap;
+        min-width: 90px;
+        letter-spacing: 0.08em;
+      }
+      .edu-deg {
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+        letter-spacing: 0.03em;
+      }
+      .edu-sch {
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+
+      /* CERTS */
+      .cert-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.2rem;
+        margin-top: 2rem;
+      }
+      .cert {
+        padding: 1.6rem;
+        border-radius: 8px;
+        background: var(--card);
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        display: flex;
+        gap: 1.2rem;
+        align-items: flex-start;
+        transition:
+          transform 0.3s,
+          border-color 0.3s;
+        backdrop-filter: blur(10px);
+      }
+      .cert:hover {
+        transform: translateY(-4px);
+        border-color: var(--gold);
+        box-shadow: 0 12px 40px rgba(201, 168, 76, 0.1);
+      }
+      .cert-ico {
+        width: 44px;
+        height: 44px;
+        border-radius: 6px;
+        background: rgba(201, 168, 76, 0.08);
+        border: 1px solid rgba(201, 168, 76, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .cert-name {
+        font-family: "Cinzel", serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 0.3rem;
+        letter-spacing: 0.03em;
+      }
+      .cert-by {
+        font-size: 0.68rem;
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      /* ═══ CONTACT ═══ */
+      .contact-inner {
+        padding: 110px 8vw;
+        text-align: center;
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      .contact-big {
+        font-family: "Cinzel", serif;
+        font-size: clamp(2.8rem, 7.5vw, 7rem);
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        line-height: 0.9;
+        margin-bottom: 1.5rem;
+      }
+      .grd {
+        background: linear-gradient(
+          90deg,
+          var(--green),
+          var(--gold),
+          var(--emerald)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200%;
+        animation: shimmer 4s linear infinite;
+      }
+      .contact-sub {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 3rem;
+        line-height: 1.9;
+      }
+      .contact-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .cl {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.85rem 1.5rem;
+        border-radius: 6px;
+        font-family: "Cinzel", serif;
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        color: var(--text);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s,
+          border-color 0.3s;
+        border: 1px solid var(--border);
+        background: var(--card);
+        backdrop-filter: blur(10px);
+      }
+      .cl:hover {
+        transform: translateY(-4px);
+      }
+      .cl-g:hover {
+        box-shadow: 0 12px 40px rgba(26, 255, 122, 0.2);
+        border-color: var(--green);
+        color: var(--green);
+      }
+      .cl-o:hover {
+        box-shadow: 0 12px 40px rgba(201, 168, 76, 0.2);
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+      .cl svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* FOOTER */
+      footer {
+        padding: 2rem 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--border);
+        font-size: 0.65rem;
+        color: var(--muted);
+        position: relative;
+        z-index: 1;
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.1em;
+      }
+      footer .f-logo {
+        background: linear-gradient(90deg, var(--gold), var(--green));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 700;
+      }
+
+      /* REVEAL */
+      .rev {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 0.75s ease,
+          transform 0.75s ease;
+      }
+      .rev.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-gfx {
+          display: none;
+        }
+        nav {
+          padding: 14px 5vw;
+        }
+        .nav-links {
+          gap: 1rem;
+        }
+        .sw {
+          padding: 70px 5vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cur"></div>
+    <div id="cur2"></div>
+    <div class="aurora">
+      <div class="ab ab1"></div>
+      <div class="ab ab2"></div>
+      <div class="ab ab3"></div>
+      <div class="ab ab4"></div>
+    </div>
+    <canvas id="bgc"></canvas>
+
+    <nav>
+      <a href="#hero" class="logo">HARIHARAN</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- ══════════════ HERO ══════════════ -->
+    <section id="hero">
+      <!-- Left vine -->
+      <svg
+        class="vine-left"
+        viewBox="0 0 80 900"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M40 900 C40 700, 20 600, 40 480 C60 360, 20 260, 40 150 C55 60, 35 20, 40 0"
+          stroke="rgba(26,255,122,0.18)"
+          stroke-width="1.5"
+          fill="none"
+        />
+        <!-- Leaves -->
+        <ellipse
+          cx="28"
+          cy="820"
+          rx="14"
+          ry="7"
+          fill="rgba(26,255,122,0.12)"
+          transform="rotate(-30 28 820)"
+        />
+        <ellipse
+          cx="52"
+          cy="750"
+          rx="12"
+          ry="6"
+          fill="rgba(201,168,76,0.1)"
+          transform="rotate(25 52 750)"
+        />
+        <ellipse
+          cx="25"
+          cy="670"
+          rx="16"
+          ry="7"
+          fill="rgba(26,255,122,0.1)"
+          transform="rotate(-20 25 670)"
+        />
+        <ellipse
+          cx="55"
+          cy="580"
+          rx="11"
+          ry="5"
+          fill="rgba(46,204,113,0.1)"
+          transform="rotate(35 55 580)"
+        />
+        <ellipse
+          cx="22"
+          cy="490"
+          rx="15"
+          ry="6"
+          fill="rgba(26,255,122,0.12)"
+          transform="rotate(-15 22 490)"
+        />
+        <ellipse
+          cx="56"
+          cy="400"
+          rx="13"
+          ry="6"
+          fill="rgba(201,168,76,0.09)"
+          transform="rotate(20 56 400)"
+        />
+        <ellipse
+          cx="24"
+          cy="310"
+          rx="14"
+          ry="6"
+          fill="rgba(26,255,122,0.1)"
+          transform="rotate(-25 24 310)"
+        />
+        <ellipse
+          cx="54"
+          cy="220"
+          rx="11"
+          ry="5"
+          fill="rgba(46,204,113,0.09)"
+          transform="rotate(30 54 220)"
+        />
+        <ellipse
+          cx="26"
+          cy="140"
+          rx="13"
+          ry="5"
+          fill="rgba(26,255,122,0.1)"
+          transform="rotate(-18 26 140)"
+        />
+      </svg>
+
+      <!-- Right vine -->
+      <svg
+        class="vine-right"
+        viewBox="0 0 80 900"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M40 900 C40 700, 60 600, 40 480 C20 360, 60 260, 40 150 C25 60, 45 20, 40 0"
+          stroke="rgba(201,168,76,0.15)"
+          stroke-width="1.5"
+          fill="none"
+        />
+        <ellipse
+          cx="52"
+          cy="830"
+          rx="14"
+          ry="7"
+          fill="rgba(201,168,76,0.1)"
+          transform="rotate(30 52 830)"
+        />
+        <ellipse
+          cx="28"
+          cy="760"
+          rx="12"
+          ry="6"
+          fill="rgba(26,255,122,0.1)"
+          transform="rotate(-25 28 760)"
+        />
+        <ellipse
+          cx="55"
+          cy="680"
+          rx="15"
+          ry="7"
+          fill="rgba(201,168,76,0.1)"
+          transform="rotate(20 55 680)"
+        />
+        <ellipse
+          cx="25"
+          cy="600"
+          rx="11"
+          ry="5"
+          fill="rgba(26,255,122,0.09)"
+          transform="rotate(-35 25 600)"
+        />
+        <ellipse
+          cx="58"
+          cy="510"
+          rx="14"
+          ry="6"
+          fill="rgba(201,168,76,0.1)"
+          transform="rotate(15 58 510)"
+        />
+        <ellipse
+          cx="24"
+          cy="420"
+          rx="12"
+          ry="5"
+          fill="rgba(26,255,122,0.09)"
+          transform="rotate(-22 24 420)"
+        />
+        <ellipse
+          cx="56"
+          cy="330"
+          rx="14"
+          ry="6"
+          fill="rgba(201,168,76,0.09)"
+          transform="rotate(28 56 330)"
+        />
+      </svg>
+
+      <!-- HERO GRAPHIC — Loki Tree of Life / Yggdrasil meets AI circuit -->
+      <div class="hero-gfx">
+        <svg
+          viewBox="0 0 480 520"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <radialGradient id="rg1" cx="50%" cy="60%" r="50%">
+              <stop offset="0%" stop-color="#1aff7a" stop-opacity=".3" />
+              <stop offset="100%" stop-color="#1aff7a" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="rg2" cx="50%" cy="60%" r="50%">
+              <stop offset="0%" stop-color="#c9a84c" stop-opacity=".25" />
+              <stop offset="100%" stop-color="#c9a84c" stop-opacity="0" />
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="5" result="b" />
+              <feComposite in="SourceGraphic" in2="b" operator="over" />
+            </filter>
+            <filter id="softglow">
+              <feGaussianBlur stdDeviation="3" result="b" />
+              <feComposite in="SourceGraphic" in2="b" operator="over" />
+            </filter>
+            <!-- Leaf shape -->
+            <path
+              id="lf"
+              d="M0,-10 C6,-6 8,0 6,8 C3,14 -3,14 -6,8 C-8,0 -6,-6 0,-10 Z"
+            />
+          </defs>
+
+          <!-- Root glow -->
+          <ellipse
+            cx="240"
+            cy="470"
+            rx="110"
+            ry="20"
+            fill="url(#rg1)"
+            opacity=".6"
+          />
+          <ellipse
+            cx="240"
+            cy="460"
+            rx="70"
+            ry="12"
+            fill="url(#rg2)"
+            opacity=".5"
+          />
+
+          <!-- TRUNK -->
+          <path
+            d="M240 460 C238 400, 235 360, 240 300 C245 240, 238 200, 240 150"
+            stroke="rgba(201,168,76,0.5)"
+            stroke-width="3.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M240 460 C242 400, 245 360, 240 300 C235 240, 242 200, 240 150"
+            stroke="rgba(26,255,122,0.2)"
+            stroke-width="1.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+
+          <!-- ROOTS spreading -->
+          <path
+            d="M235 455 C220 468, 190 472, 160 478 C140 482, 110 476, 90 490"
+            stroke="rgba(201,168,76,0.3)"
+            stroke-width="1.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M235 455 C225 470, 210 480, 190 492"
+            stroke="rgba(26,255,122,0.2)"
+            stroke-width="1"
+            fill="none"
+          />
+          <path
+            d="M245 455 C260 468, 290 472, 320 478 C340 482, 370 476, 390 490"
+            stroke="rgba(201,168,76,0.3)"
+            stroke-width="1.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M245 455 C255 470, 270 480, 290 492"
+            stroke="rgba(26,255,122,0.2)"
+            stroke-width="1"
+            fill="none"
+          />
+          <path
+            d="M238 460 C230 472, 215 478, 200 490"
+            stroke="rgba(46,204,113,0.2)"
+            stroke-width="1"
+            fill="none"
+          />
+          <path
+            d="M242 460 C250 472, 265 478, 280 490"
+            stroke="rgba(46,204,113,0.2)"
+            stroke-width="1"
+            fill="none"
+          />
+
+          <!-- BRANCH system -->
+          <!-- Left branches -->
+          <path
+            d="M238 300 C225 290, 200 280, 170 265 C145 252, 115 250, 90 240"
+            stroke="rgba(201,168,76,0.4)"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M170 265 C155 255, 130 250, 108 242"
+            stroke="rgba(26,255,122,0.25)"
+            stroke-width="1.2"
+            fill="none"
+          />
+          <path
+            d="M240 270 C222 258, 195 248, 165 232 C142 220, 115 215, 88 200"
+            stroke="rgba(201,168,76,0.35)"
+            stroke-width="1.8"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M238 230 C220 218, 195 210, 168 198 C145 188, 118 185, 92 175"
+            stroke="rgba(26,255,122,0.3)"
+            stroke-width="1.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M238 200 C218 185, 190 178, 162 165"
+            stroke="rgba(201,168,76,0.3)"
+            stroke-width="1.5"
+            fill="none"
+          />
+          <!-- Right branches -->
+          <path
+            d="M242 300 C255 290, 280 280, 310 265 C335 252, 365 250, 390 240"
+            stroke="rgba(201,168,76,0.4)"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M310 265 C325 255, 350 250, 372 242"
+            stroke="rgba(26,255,122,0.25)"
+            stroke-width="1.2"
+            fill="none"
+          />
+          <path
+            d="M240 270 C258 258, 285 248, 315 232 C338 220, 365 215, 392 200"
+            stroke="rgba(201,168,76,0.35)"
+            stroke-width="1.8"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M242 230 C260 218, 285 210, 312 198 C335 188, 362 185, 388 175"
+            stroke="rgba(26,255,122,0.3)"
+            stroke-width="1.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M242 200 C262 185, 290 178, 318 165"
+            stroke="rgba(201,168,76,0.3)"
+            stroke-width="1.5"
+            fill="none"
+          />
+          <!-- Top crown branches -->
+          <path
+            d="M240 155 C225 140, 205 128, 180 118 C158 108, 132 106, 110 98"
+            stroke="rgba(201,168,76,0.45)"
+            stroke-width="1.8"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M240 155 C255 140, 275 128, 300 118 C322 108, 348 106, 370 98"
+            stroke="rgba(201,168,76,0.45)"
+            stroke-width="1.8"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M240 155 C240 135, 240 115, 240 90"
+            stroke="rgba(26,255,122,0.4)"
+            stroke-width="2"
+            fill="none"
+          />
+          <path
+            d="M230 130 C215 115, 195 104, 172 94"
+            stroke="rgba(26,255,122,0.25)"
+            stroke-width="1.2"
+            fill="none"
+          />
+          <path
+            d="M250 130 C265 115, 285 104, 308 94"
+            stroke="rgba(26,255,122,0.25)"
+            stroke-width="1.2"
+            fill="none"
+          />
+
+          <!-- LEAVES — scattered naturally -->
+          <!-- Top crown cluster -->
+          <g transform="translate(110,95) rotate(-15)">
+            <use
+              href="#lf"
+              fill="#1aff7a"
+              opacity=".5"
+              filter="url(#softglow)"
+            />
+          </g>
+          <g transform="translate(130,84) rotate(10)">
+            <use href="#lf" fill="#c9a84c" opacity=".4" />
+          </g>
+          <g transform="translate(240,78) rotate(5)">
+            <use
+              href="#lf"
+              fill="#1aff7a"
+              opacity=".55"
+              filter="url(#softglow)"
+            />
+          </g>
+          <g transform="translate(260,68) rotate(-8)">
+            <use href="#lf" fill="#2ecc71" opacity=".4" />
+          </g>
+          <g transform="translate(370,94) rotate(20)">
+            <use
+              href="#lf"
+              fill="#1aff7a"
+              opacity=".5"
+              filter="url(#softglow)"
+            />
+          </g>
+          <g transform="translate(350,82) rotate(-12)">
+            <use href="#lf" fill="#c9a84c" opacity=".35" />
+          </g>
+          <g transform="translate(200,105) rotate(18)">
+            <use href="#lf" fill="#7fff00" opacity=".35" />
+          </g>
+          <g transform="translate(290,102) rotate(-20)">
+            <use href="#lf" fill="#7fff00" opacity=".35" />
+          </g>
+
+          <!-- Mid left leaves -->
+          <g transform="translate(88,195) rotate(-30)">
+            <use href="#lf" fill="#2ecc71" opacity=".4" />
+          </g>
+          <g transform="translate(100,210) rotate(5)">
+            <use
+              href="#lf"
+              fill="#1aff7a"
+              opacity=".35"
+              filter="url(#softglow)"
+            />
+          </g>
+          <g transform="translate(88,238) rotate(-18)">
+            <use href="#lf" fill="#c9a84c" opacity=".35" />
+          </g>
+          <g transform="translate(160,163) rotate(22)">
+            <use href="#lf" fill="#1aff7a" opacity=".4" />
+          </g>
+
+          <!-- Mid right leaves -->
+          <g transform="translate(392,195) rotate(30)">
+            <use href="#lf" fill="#2ecc71" opacity=".4" />
+          </g>
+          <g transform="translate(380,210) rotate(-5)">
+            <use
+              href="#lf"
+              fill="#1aff7a"
+              opacity=".35"
+              filter="url(#softglow)"
+            />
+          </g>
+          <g transform="translate(392,238) rotate(18)">
+            <use href="#lf" fill="#c9a84c" opacity=".35" />
+          </g>
+          <g transform="translate(320,163) rotate(-22)">
+            <use href="#lf" fill="#1aff7a" opacity=".4" />
+          </g>
+
+          <!-- Lower branch leaves -->
+          <g transform="translate(92,254) rotate(-10)">
+            <use href="#lf" fill="#1aff7a" opacity=".3" />
+          </g>
+          <g transform="translate(390,254) rotate(10)">
+            <use href="#lf" fill="#1aff7a" opacity=".3" />
+          </g>
+
+          <!-- CIRCUIT NODES on trunk (AI theme) -->
+          <circle
+            cx="240"
+            cy="150"
+            r="7"
+            fill="#020a04"
+            stroke="rgba(201,168,76,0.7)"
+            stroke-width="1.5"
+            filter="url(#glow)"
+          />
+          <circle cx="240" cy="150" r="3.5" fill="#c9a84c" opacity=".8" />
+          <circle
+            cx="240"
+            cy="230"
+            r="6"
+            fill="#020a04"
+            stroke="rgba(26,255,122,0.7)"
+            stroke-width="1.5"
+          />
+          <circle cx="240" cy="230" r="3" fill="#1aff7a" opacity=".8">
+            <animate
+              attributeName="opacity"
+              values="0.8;0.3;0.8"
+              dur="2.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle
+            cx="240"
+            cy="300"
+            r="7"
+            fill="#020a04"
+            stroke="rgba(201,168,76,0.7)"
+            stroke-width="1.5"
+            filter="url(#glow)"
+          />
+          <circle cx="240" cy="300" r="3.5" fill="#c9a84c" opacity=".7" />
+          <circle
+            cx="240"
+            cy="370"
+            r="5"
+            fill="#020a04"
+            stroke="rgba(46,204,113,0.6)"
+            stroke-width="1.2"
+          />
+          <circle cx="240" cy="370" r="2.5" fill="#2ecc71" opacity=".7" />
+
+          <!-- Branch endpoint nodes -->
+          <circle
+            cx="90"
+            cy="240"
+            r="5"
+            fill="#020a04"
+            stroke="rgba(26,255,122,0.5)"
+            stroke-width="1.2"
+          />
+          <circle cx="90" cy="240" r="2.5" fill="#1aff7a" opacity=".6">
+            <animate
+              attributeName="opacity"
+              values="0.6;0.2;0.6"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle
+            cx="390"
+            cy="240"
+            r="5"
+            fill="#020a04"
+            stroke="rgba(26,255,122,0.5)"
+            stroke-width="1.2"
+          />
+          <circle cx="390" cy="240" r="2.5" fill="#1aff7a" opacity=".6">
+            <animate
+              attributeName="opacity"
+              values="0.6;0.2;0.6"
+              dur="3.5s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle
+            cx="88"
+            cy="200"
+            r="4"
+            fill="#020a04"
+            stroke="rgba(201,168,76,0.5)"
+            stroke-width="1.2"
+          />
+          <circle cx="88" cy="200" r="2" fill="#c9a84c" opacity=".6" />
+          <circle
+            cx="392"
+            cy="200"
+            r="4"
+            fill="#020a04"
+            stroke="rgba(201,168,76,0.5)"
+            stroke-width="1.2"
+          />
+          <circle cx="392" cy="200" r="2" fill="#c9a84c" opacity=".6" />
+
+          <!-- Loki rune symbols floating near tree -->
+          <text
+            x="60"
+            y="290"
+            font-family="serif"
+            font-size="18"
+            fill="rgba(201,168,76,0.3)"
+            opacity=".8"
+          >
+            ᚦ
+          </text>
+          <text
+            x="400"
+            y="290"
+            font-family="serif"
+            font-size="18"
+            fill="rgba(26,255,122,0.3)"
+            opacity=".8"
+          >
+            ᚱ
+          </text>
+          <text
+            x="55"
+            y="178"
+            font-family="serif"
+            font-size="15"
+            fill="rgba(201,168,76,0.25)"
+          >
+            ᛚ
+          </text>
+          <text
+            x="410"
+            y="178"
+            font-family="serif"
+            font-size="15"
+            fill="rgba(26,255,122,0.25)"
+          >
+            ᚾ
+          </text>
+          <text
+            x="200"
+            y="510"
+            font-family="serif"
+            font-size="13"
+            fill="rgba(201,168,76,0.2)"
+          >
+            ᚷ
+          </text>
+          <text
+            x="268"
+            y="510"
+            font-family="serif"
+            font-size="13"
+            fill="rgba(26,255,122,0.2)"
+          >
+            ᛁ
+          </text>
+
+          <!-- Horns motif at top (subtle Loki crown) -->
+          <path
+            d="M218 78 C210 55, 195 35, 200 18"
+            stroke="rgba(201,168,76,0.35)"
+            stroke-width="1.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M262 78 C270 55, 285 35, 280 18"
+            stroke="rgba(201,168,76,0.35)"
+            stroke-width="1.5"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M200 18 C196 10, 188 8, 184 12"
+            stroke="rgba(201,168,76,0.3)"
+            stroke-width="1.2"
+            fill="none"
+            stroke-linecap="round"
+          />
+          <path
+            d="M280 18 C284 10, 292 8, 296 12"
+            stroke="rgba(201,168,76,0.3)"
+            stroke-width="1.2"
+            fill="none"
+            stroke-linecap="round"
+          />
+
+          <!-- Aura around tree center -->
+          <ellipse
+            cx="240"
+            cy="280"
+            rx="80"
+            ry="180"
+            fill="url(#rg1)"
+            opacity=".15"
+          />
+        </svg>
+      </div>
+
+      <p class="hero-eyebrow">Hariharan's Portfolio</p>
+      <h1 class="hero-h1">
+        <span class="l1">B.Tech</span>
+        <span class="l2">AI &amp; DATA</span>
+        <span class="l3">SCIENCE STUDENT</span>
+      </h1>
+      <p class="hero-sub">
+        Third-year B.Tech student specializing in
+        <strong>Artificial Intelligence and Data Science</strong>, with hands-on
+        experience in Python, Java, machine learning, and computer vision .
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-loki">View Projects</a>
+        <a href="#contact" class="btn-ghost">Contact Me →</a>
+      </div>
+    </section>
+
+    <div class="rune-divider">
+      <span class="rune-sym">ᚺ · Profile · ᚺ</span>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="sw">
+        <div class="about-grid">
+          <div
+            class="rev"
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <div class="medallion">
+              <div class="med-outer">
+                <!-- rune marks -->
+                <span
+                  class="rune-mark rm1"
+                  style="
+                    animation: none;
+                    top: 4px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                  "
+                  >ᚺ</span
+                >
+                <span
+                  class="rune-mark rm2"
+                  style="
+                    animation: none;
+                    bottom: 4px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                  "
+                  >ᛊ</span
+                >
+                <span
+                  class="rune-mark rm3"
+                  style="
+                    animation: none;
+                    left: 4px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                  "
+                  >ᚱ</span
+                >
+                <span
+                  class="rune-mark rm4"
+                  style="
+                    animation: none;
+                    right: 4px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                  "
+                  >ᚾ</span
+                >
+              </div>
+              <div class="med-mid"></div>
+              <div class="med-core">
+                <div class="med-letters">HS</div>
+                <div class="med-label">AI · DS · RIT</div>
+              </div>
+            </div>
+            <div class="about-stats">
+              <div class="astat">
+                <div class="astat-n">5+</div>
+                <div class="astat-l">Projects</div>
+              </div>
+              <div class="astat">
+                <div class="astat-n">2</div>
+                <div class="astat-l">Internships</div>
+              </div>
+              <div class="astat">
+                <div class="astat-n">4</div>
+                <div class="astat-l">Languages</div>
+              </div>
+              <div class="astat">
+                <div class="astat-n">3rd</div>
+                <div class="astat-l">Year B.Tech</div>
+              </div>
+            </div>
+          </div>
+          <div class="rev" style="transition-delay: 0.2s">
+            <p class="sec-tag">Profile</p>
+            <h2 class="sec-title">
+              Turning data<br />into <span>insight</span>
+            </h2>
+            <p>
+              I enjoy working with data across the full pipeline, from preparing
+              structured datasets to extracting value from unstructured text and
+              image data.
+            </p>
+            <p>
+              Pursuing B.Tech in AI &amp; Data Science at Rajalakshmi Institute
+              of Technology. Through internships at PwC and the CIIC-Intel
+              Unnati program, I have built a practical foundation in analytics,
+              machine learning, and applied AI development with projects in fake
+              news detection, pneumonia detection, spam classification, and text
+              vectorization.
+            </p>
+            <p>
+              In addition to AI-focused work, I use Java for object-oriented
+              programming, problem solving, and backend fundamentals, with
+              exposure to Spring Boot and REST API development.
+            </p>
+            <div class="pills">
+              <span class="pill pg">Python</span>
+              <span class="pill po">Java</span>
+              <span class="pill pg">C</span>
+              <span class="pill po">SQL</span>
+              <span class="pill pg">Machine Learning</span>
+              <span class="pill po">NLP</span>
+              <span class="pill pg">Deep Learning</span>
+              <span class="pill po">Power BI</span>
+              <span class="pill pg">TensorFlow</span>
+              <span class="pill po">Scikit-learn</span>
+              <span class="pill pg">Streamlit</span>
+              <span class="pill po">Flask</span>
+              <span class="pill pg">Spring Boot</span>
+              <span class="pill po">REST API</span>
+              <span class="pill pg">OOP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rune-divider">
+      <span class="rune-sym">ᛏ · Projects · ᛏ</span>
+    </div>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="sw">
+        <p class="sec-tag rev">Project Portfolio</p>
+        <h2 class="sec-title rev">Featured <span>Projects</span></h2>
+        <div class="proj-grid">
+          <div class="pc pc1 rev">
+            <div class="pc-icon">🌿</div>
+            <div class="pc-num">I</div>
+            <div class="pc-tag">NLP · Language</div>
+            <h3 class="pc-title">Real-Time Fake News Detection</h3>
+            <p class="pc-desc">
+              Built an NLP pipeline to classify genuine and fabricated news in
+              real time using TF-IDF features and ensemble machine learning
+              models.
+            </p>
+            <div class="pc-tech">
+              <span>Python</span><span>NLP</span><span>TF-IDF</span
+              ><span>Sklearn</span>
+            </div>
+          </div>
+          <div class="pc pc2 rev" style="transition-delay: 0.08s">
+            <div class="pc-icon">🍃</div>
+            <div class="pc-num">II</div>
+            <div class="pc-tag">Computer Vision · Healthcare</div>
+            <h3 class="pc-title">Pneumonia Detection Through X-Ray</h3>
+            <p class="pc-desc">
+              Developed a medical image classification project for pneumonia
+              detection using chest X-ray data, with a structured codebase,
+              trained models, and a Streamlit application for prediction.
+            </p>
+            <div class="pc-tech">
+              <span>Python</span><span>CNN</span><span>TensorFlow</span
+              ><span>Streamlit</span>
+            </div>
+          </div>
+          <div class="pc pc3 rev" style="transition-delay: 0.16s">
+            <div class="pc-icon">🌱</div>
+            <div class="pc-num">III</div>
+            <div class="pc-tag">NLP · Feature Engineering</div>
+            <h3 class="pc-title">Text to Vector Conversion</h3>
+            <p class="pc-desc">
+              Built a Python-based workflow to convert text from documents or
+              links into vector representations for downstream classification
+              and analysis tasks.
+            </p>
+            <div class="pc-tech">
+              <span>Python</span><span>NLP</span><span>Vectorization</span
+              ><span>Text Processing</span>
+            </div>
+          </div>
+          <div class="pc pc4 rev" style="transition-delay: 0.24s">
+            <div class="pc-icon">🍀</div>
+            <div class="pc-num">IV</div>
+            <div class="pc-tag">Machine Learning · NLP</div>
+            <h3 class="pc-title">Spam SMS Detection</h3>
+            <p class="pc-desc">
+              Created a message classification model to identify spam and ham
+              SMS content as part of the CodSoft internship project set using
+              practical text preprocessing and machine learning techniques.
+            </p>
+            <div class="pc-tech">
+              <span>Python</span><span>Scikit-learn</span><span>NLP</span
+              ><span>Classification</span>
+            </div>
+          </div>
+          <div class="pc pc5 rev" style="transition-delay: 0.32s">
+            <div class="pc-icon">🌾</div>
+            <div class="pc-num">V</div>
+            <div class="pc-tag">Machine Learning · Classification</div>
+            <h3 class="pc-title">Movie Genre Classification</h3>
+            <p class="pc-desc">
+              Developed a classification project to predict movie genres from
+              text-based features in the CodSoft internship collection, showing
+              applied machine learning workflow and model evaluation.
+            </p>
+            <div class="pc-tech">
+              <span>Python</span><span>Machine Learning</span><span>NLP</span
+              ><span>Jupyter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rune-divider">
+      <span class="rune-sym">ᚨ · Experience · ᚨ</span>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="sw">
+        <p class="sec-tag rev">Experience</p>
+        <h2 class="sec-title rev">Professional <span>Experience</span></h2>
+        <div class="exp-grid">
+          <div class="exp-card ec1 rev">
+            <span class="exp-badge">Onsite · AI/ML</span>
+            <p class="exp-period">ᚺ Internship</p>
+            <h3 class="exp-role">AI &amp; Machine Learning Intern</h3>
+            <p class="exp-co">CIIC — Intel Unnati Program</p>
+            <p class="exp-desc">
+              Worked on AI/ML pipelines and model development in a practical
+              training environment, gaining exposure to applied machine learning
+              workflows and real-world datasets.
+            </p>
+          </div>
+          <div class="exp-card ec2 rev" style="transition-delay: 0.15s">
+            <span class="exp-badge">Virtual · Analytics</span>
+            <p class="exp-period">⟡ Internship</p>
+            <h3 class="exp-role">Power BI Analyst Intern</h3>
+            <p class="exp-co">PwC — Forage Job Simulation</p>
+            <p class="exp-desc">
+              Completed the PwC Power BI job simulation on Forage, creating
+              business dashboards and strengthening skills in data analysis,
+              reporting, and visual communication.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="rune-divider">
+      <span class="rune-sym">ᛖ · Education · ᛖ</span>
+    </div>
+
+    <!-- EDUCATION -->
+    <section id="education">
+      <div class="sw">
+        <p class="sec-tag rev">Education</p>
+        <h2 class="sec-title rev">Education &amp; <span>Credentials</span></h2>
+        <div class="edu-grid">
+          <div class="edu-card rev">
+            <div class="edu-yr">2023–2027</div>
+            <div>
+              <p class="edu-deg">
+                B.Tech — Artificial Intelligence &amp; Data Science
+              </p>
+              <p class="edu-sch">
+                Rajalakshmi Institute of Technology · Affiliated by Anna
+                University
+              </p>
+            </div>
+          </div>
+          <div class="edu-card rev" style="transition-delay: 0.1s">
+            <div class="edu-yr">2023</div>
+            <div>
+              <p class="edu-deg">12th — Higher Secondary Education</p>
+              <p class="edu-sch">
+                A.R.L.M. Matric Higher Secondary School · State Board Syllabus
+              </p>
+            </div>
+          </div>
+          <div class="edu-card rev" style="transition-delay: 0.2s">
+            <div class="edu-yr">2021</div>
+            <div>
+              <p class="edu-deg">10th — Secondary School Certificate</p>
+              <p class="edu-sch">
+                A.R.L.M. Matric Higher Secondary School · State Board Syllabus
+              </p>
+            </div>
+          </div>
+        </div>
+        <p class="sec-tag rev" style="margin-top: 4rem">ᛜ Certifications</p>
+        <div class="cert-grid">
+          <div class="cert rev">
+            <div class="cert-ico">🌿</div>
+            <div>
+              <p class="cert-name">Career Essentials in Generative AI</p>
+              <p class="cert-by">Microsoft &amp; LinkedIn Learning</p>
+            </div>
+          </div>
+          <div class="cert rev" style="transition-delay: 0.1s">
+            <div class="cert-ico">⚗️</div>
+            <div>
+              <p class="cert-name">Introduction to Artificial Intelligence</p>
+              <p class="cert-by">Certification Program</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <!-- Contact forest graphic -->
+      <svg
+        style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          width: 100%;
+          height: 200px;
+          pointer-events: none;
+          z-index: 0;
+          opacity: 0.3;
+        "
+        viewBox="0 0 1200 200"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0,200 L0,120 C50,80 80,40 120,60 C160,80 180,30 220,50 C260,70 280,20 320,40 C360,60 400,100 450,80 C500,60 540,10 580,30 C620,50 660,90 700,70 C740,50 780,0 820,20 C860,40 900,80 950,60 C1000,40 1040,10 1080,30 C1120,50 1160,80 1200,60 L1200,200 Z"
+          fill="rgba(7,18,9,0.95)"
+        />
+        <!-- Tree silhouettes -->
+        <path d="M100,120 L115,60 L130,120" fill="rgba(13,51,24,0.6)" />
+        <rect x="112" y="120" width="6" height="30" fill="rgba(13,51,24,0.5)" />
+        <path d="M95,115 L115,55 L135,115" fill="rgba(10,77,26,0.4)" />
+        <path d="M300,120 L318,55 L336,120" fill="rgba(13,51,24,0.6)" />
+        <rect x="315" y="120" width="6" height="30" fill="rgba(13,51,24,0.5)" />
+        <path d="M700,120 L715,65 L730,120" fill="rgba(10,77,26,0.5)" />
+        <rect x="713" y="120" width="4" height="28" fill="rgba(13,51,24,0.5)" />
+        <path d="M900,120 L918,50 L936,120" fill="rgba(13,51,24,0.6)" />
+        <rect x="915" y="120" width="6" height="30" fill="rgba(13,51,24,0.5)" />
+        <path d="M1100,120 L1115,65 L1130,120" fill="rgba(10,77,26,0.4)" />
+      </svg>
+
+      <div class="contact-inner">
+        <p
+          class="sec-tag rev"
+          style="justify-content: center; margin-bottom: 1.2rem"
+        >
+          ⟡ Get in Touch ⟡
+        </p>
+        <h2 class="contact-big rev">
+          Let&rsquo;s Build<br /><span class="grd">Something</span
+          ><br />Meaningful
+        </h2>
+        <p class="contact-sub rev">
+          Open to internships, research opportunities, and AI/ML projects.<br />I
+          would be glad to connect and collaborate.
+        </p>
+        <div class="contact-links rev">
+          <a href="mailto:hh6602023@gmail.com" class="cl cl-o">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m2 7 10 7 10-7" />
+            </svg>
+            hh6602023@gmail.com
+          </a>
+          <a href="tel:7418133911" class="cl cl-g">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 12 19.79 19.79 0 0 1 3.09 4.18 2 2 0 0 1 5.07 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+              />
+            </svg>
+            +91 74181 33911
+          </a>
+          <a
+            href="https://www.linkedin.com/in/hari-haran-s-017414293"
+            target="_blank"
+            class="cl cl-o"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"
+              />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/hariharansara"
+            target="_blank"
+            class="cl cl-g"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+              />
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span class="f-logo">HARIHARAN S</span>
+      <span>ᚺ RIT Chennai · AI &amp; Data Science ᚺ</span>
+    </footer>
+
+    <script>
+      /* CURSOR */
+      const cur = document.getElementById("cur"),
+        cur2 = document.getElementById("cur2");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+      });
+      (function a() {
+        cur.style.left = mx + "px";
+        cur.style.top = my + "px";
+        rx += (mx - rx) * 0.13;
+        ry += (my - ry) * 0.13;
+        cur2.style.left = rx + "px";
+        cur2.style.top = ry + "px";
+        requestAnimationFrame(a);
+      })();
+
+      /* NATURE PARTICLE BG — falling leaves + fireflies */
+      const cv = document.getElementById("bgc"),
+        c = cv.getContext("2d");
+      let W, H;
+      function resize() {
+        W = cv.width = innerWidth;
+        H = cv.height = innerHeight;
+      }
+      resize();
+      addEventListener("resize", () => {
+        resize();
+        init();
+      });
+
+      let mX = -9999,
+        mY = -9999;
+      addEventListener("mousemove", (e) => {
+        mX = e.clientX;
+        mY = e.clientY;
+      });
+
+      /* Fireflies */
+      let flies = [];
+      /* Leaves */
+      let leaves = [];
+
+      function rnd(a, b) {
+        return a + Math.random() * (b - a);
+      }
+
+      function init() {
+        /* fireflies */
+        const fn = Math.floor((W * H) / 8000);
+        flies = Array.from({ length: fn }, () => ({
+          x: rnd(0, W),
+          y: rnd(0, H),
+          vx: rnd(-0.3, 0.3),
+          vy: rnd(-0.2, 0.2),
+          r: rnd(0.8, 2.2),
+          col: Math.random() > 0.5 ? "rgba(201,168,76," : "rgba(26,255,122,",
+          p: rnd(0, Math.PI * 2),
+          ps: rnd(0.015, 0.04),
+          connected: false,
+        }));
+        /* falling leaves */
+        const ln = Math.floor(W / 100);
+        leaves = Array.from({ length: ln }, () => createLeaf(true));
+      }
+
+      function createLeaf(init) {
+        return {
+          x: rnd(0, W),
+          y: init ? rnd(0, H) : -20,
+          vx: rnd(-0.4, 0.4),
+          vy: rnd(0.4, 1.2),
+          rot: rnd(0, Math.PI * 2),
+          rotV: rnd(-0.03, 0.03),
+          size: rnd(5, 12),
+          col: Math.random() > 0.55 ? "rgba(201,168,76," : "rgba(26,255,122,",
+          alpha: rnd(0.2, 0.55),
+          swing: rnd(0, Math.PI * 2),
+          swingS: rnd(0.01, 0.025),
+        };
+      }
+
+      function drawLeaf(l) {
+        c.save();
+        c.translate(l.x, l.y);
+        c.rotate(l.rot);
+        c.beginPath();
+        c.moveTo(0, -l.size);
+        c.bezierCurveTo(
+          l.size * 0.7,
+          -l.size * 0.6,
+          l.size * 0.8,
+          l.size * 0.4,
+          l.size * 0.6,
+          l.size,
+        );
+        c.bezierCurveTo(
+          0,
+          l.size * 0.7,
+          -l.size * 0.6,
+          l.size * 0.4,
+          -l.size * 0.7,
+          -l.size * 0.6,
+        );
+        c.closePath();
+        c.fillStyle = l.col + l.alpha + ")";
+        c.fill();
+        /* vein */
+        c.beginPath();
+        c.moveTo(0, -l.size * 0.8);
+        c.lineTo(0, l.size * 0.8);
+        c.strokeStyle = l.col + l.alpha * 0.5 + ")";
+        c.lineWidth = 0.5;
+        c.stroke();
+        c.restore();
+      }
+
+      init();
+
+      function draw() {
+        c.clearRect(0, 0, W, H);
+
+        /* Leaves */
+        leaves.forEach((l) => {
+          l.swing += l.swingS;
+          l.x += l.vx + Math.sin(l.swing) * 0.4;
+          l.y += l.vy;
+          l.rot += l.rotV;
+          if (l.y > H + 30)
+            Object.assign(l, createLeaf(false), { x: rnd(0, W) });
+          drawLeaf(l);
+        });
+
+        /* Fireflies */
+        flies.forEach((f) => {
+          f.p += f.ps;
+          const dx = f.x - mX,
+            dy = f.y - mY,
+            d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 80) {
+            f.vx += (dx / d) * 0.5;
+            f.vy += (dy / d) * 0.5;
+          }
+          f.vx *= 0.97;
+          f.vy *= 0.97;
+          f.x += f.vx;
+          f.y += f.vy;
+          if (f.x < 0) f.x = W;
+          if (f.x > W) f.x = 0;
+          if (f.y < 0) f.y = H;
+          if (f.y > H) f.y = 0;
+          const a = 0.25 + 0.22 * Math.sin(f.p);
+          c.beginPath();
+          c.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+          c.fillStyle = f.col + a + ")";
+          c.fill();
+        });
+
+        /* Connections between close fireflies */
+        for (let i = 0; i < flies.length; i++)
+          for (let j = i + 1; j < flies.length; j++) {
+            const dx = flies[i].x - flies[j].x,
+              dy = flies[i].y - flies[j].y,
+              d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 90) {
+              c.beginPath();
+              c.moveTo(flies[i].x, flies[i].y);
+              c.lineTo(flies[j].x, flies[j].y);
+              c.globalAlpha = (1 - d / 90) * 0.15;
+              c.strokeStyle = flies[i].col + "1)";
+              c.lineWidth = 0.5;
+              c.stroke();
+              c.globalAlpha = 1;
+            }
+          }
+        requestAnimationFrame(draw);
+      }
+      draw();
+
+      /* 3D CARD TILT */
+      document.querySelectorAll(".pc").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect(),
+            x = e.clientX - r.left,
+            y = e.clientY - r.top;
+          card.style.transform = `translateY(-7px) rotateX(${-(y - r.height / 2) / 22}deg) rotateY(${(x - r.width / 2) / 22}deg)`;
+          card.style.setProperty("--mx", (x / r.width) * 100 + "%");
+          card.style.setProperty("--my", (y / r.height) * 100 + "%");
+        });
+        card.addEventListener("mouseleave", () => (card.style.transform = ""));
+      });
+
+      /* SCROLL REVEAL */
+      const obs = new IntersectionObserver(
+        (e) => {
+          e.forEach((x) => {
+            if (x.isIntersecting) x.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.07, rootMargin: "0px 0px -40px 0px" },
+      );
+      document.querySelectorAll(".rev").forEach((el) => obs.observe(el));
+
+      /* ACTIVE NAV */
+      const secs = document.querySelectorAll("section[id]"),
+        nls = document.querySelectorAll(".nav-links a");
+      addEventListener("scroll", () => {
+        let active = "";
+        secs.forEach((s) => {
+          if (scrollY >= s.offsetTop - 130) active = s.id;
+        });
+        nls.forEach(
+          (a) =>
+            (a.style.color =
+              a.getAttribute("href") === "#" + active ? "var(--gold)" : ""),
+        );
+      });
+    </script>
+  </body>
+</html>
